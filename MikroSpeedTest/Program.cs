@@ -36,7 +36,7 @@ namespace MikroSpeedTest
 
 			var miliSeconds =stopwatch.ElapsedMilliseconds;
 			var rounded = Math.Round((decimal)miliSeconds,2,MidpointRounding.AwayFromZero);
-			MessageBox.Show("Completed in "+rounded + "milliseconds.");
+			MessageBox.Show("Completed in "+rounded + " milliseconds.");
 
 		}
 
