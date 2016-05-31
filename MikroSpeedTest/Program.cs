@@ -12,18 +12,30 @@ namespace MikroSpeedTest
 		static void Main(string[] args)
 		{
 			var stopwatch = new Stopwatch();
-			stopwatch.Start();
+			decimal cpuSpeed = 0;
+			decimal hddSpeed = 0;
 			List<string> stringList = new List<string>() {};
 
+
+			stopwatch.Start();
 			CpuTest(stringList);
-
-			HddTest(stringList);
-
 			stopwatch.Stop();
+			cpuSpeed = stopwatch.ElapsedMilliseconds;
+
+
+			stopwatch.Restart();
+			HddTest(stringList);
+			stopwatch.Stop();
+			hddSpeed = stopwatch.ElapsedMilliseconds;
+			
 
 			var miliSeconds =stopwatch.ElapsedMilliseconds;
 			var rounded = Math.Round((decimal)miliSeconds,2,MidpointRounding.AwayFromZero);
-			MessageBox.Show("Completed in "+rounded + " milliseconds.");
+			MessageBox.Show(
+			"Completed in "+ (cpuSpeed+hddSpeed) + " milliseconds." + System.Environment.NewLine+
+			"CPU in "+cpuSpeed + " milliseconds." + System.Environment.NewLine+
+			"HDD in "+hddSpeed + " milliseconds." + System.Environment.NewLine
+			);
 
 		}
 
