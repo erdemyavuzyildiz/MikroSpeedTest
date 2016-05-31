@@ -15,6 +15,31 @@ namespace MikroSpeedTest
 			stopwatch.Start();
 			List<string> stringList = new List<string>() {};
 
+			CpuTest(stringList);
+
+			HddTest(stringList);
+
+			stopwatch.Stop();
+
+			var miliSeconds =stopwatch.ElapsedMilliseconds;
+			var rounded = Math.Round((decimal)miliSeconds,2,MidpointRounding.AwayFromZero);
+			MessageBox.Show("Completed in "+rounded + " milliseconds.");
+
+		}
+
+		private static void HddTest(List<string> stringList)
+		{
+			int fileSize = 100000;
+			for (int i = 0; i < 100; i++)
+			{
+				File.WriteAllText("testfile.txt", string.Join("", stringList.Take(fileSize).ToArray()));
+				File.Delete("testfile.txt");
+				fileSize -= 100000/200;
+			}
+		}
+
+		private static void CpuTest(List<string> stringList)
+		{
 			for (int i = 0; i < 50000000; i++)
 			{
 				stringList.Add("ABCDEFG");
@@ -24,20 +49,6 @@ namespace MikroSpeedTest
 			{
 				stringList.AsParallel().ForAll(Calculate);
 			}
-
-
-			for (int i = 0; i < 30; i++)
-			{
-				File.WriteAllText("testfile.txt",string.Join("",stringList.Take(100000).ToArray()));
-				File.Delete("testfile.txt");
-			}
-
-			stopwatch.Stop();
-
-			var miliSeconds =stopwatch.ElapsedMilliseconds;
-			var rounded = Math.Round((decimal)miliSeconds,2,MidpointRounding.AwayFromZero);
-			MessageBox.Show("Completed in "+rounded + " milliseconds.");
-
 		}
 
 		public static void Calculate(string variable1) { }
