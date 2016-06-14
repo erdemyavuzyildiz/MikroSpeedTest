@@ -45,6 +45,7 @@ namespace MikroSpeedTest
 			for (int i = 0; i < 100; i++)
 			{
 				File.WriteAllText("testfile.txt", string.Join("", stringList.Take(fileSize).ToArray()));
+				File.ReadAllText("testfile.txt");
 				File.Delete("testfile.txt");
 				fileSize -= 100000/200;
 			}
